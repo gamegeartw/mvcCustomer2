@@ -179,6 +179,7 @@
     <Compile Include="Controllers\Customer\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleManagerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +204,7 @@
     <Compile Include="Models\Partials\BankData.cs" />
     <Compile Include="Models\Partials\Contacts.cs" />
     <Compile Include="Models\Partials\Customer.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\客戶聯絡人.cs">
       <DependentUpon>ModelCustomer.tt</DependentUpon>
     </Compile>
@@ -307,11 +309,9 @@
     <Content Include="Views\BankData\Details.cshtml" />
     <Content Include="Views\BankData\Edit.cshtml" />
     <Content Include="Views\BankData\Index.cshtml" />
+    <Content Include="Views\RoleManager\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\AccountBase\" />
-    <Folder Include="Views\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

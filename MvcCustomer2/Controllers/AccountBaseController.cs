@@ -21,7 +21,7 @@ namespace MvcCustomer2.Controllers
         public AccountBaseController()
         {
             //TODO:新增預設角色
-            if (context.Roles.Count()==0)
+            if (context.Roles.Count() == 0)
             {
                 context.Roles.Add(new IdentityRole("admin"));
                 context.Roles.Add(new IdentityRole("operator"));
@@ -71,12 +71,12 @@ namespace MvcCustomer2.Controllers
                 _signInManager.Dispose();
                 _signInManager = null;
             }
-            if (disposing && context != null)
-            {
-                context.Dispose();
-                context = null;
+            //if (disposing && context != null)
+            //{
+            //    context.Dispose();
+            //    context = null;
 
-            }
+            //}
             base.Dispose(disposing);
         }
     }
