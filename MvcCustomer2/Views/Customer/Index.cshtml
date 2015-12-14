@@ -21,13 +21,13 @@
             @Html.DisplayNameFor(model => model.電話)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.傳真)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.地址)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.客戶銀行資訊)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.客戶聯絡人)
         </th>
         <th></th>
     </tr>
@@ -44,13 +44,19 @@
             @Html.DisplayFor(modelItem => item.電話)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.傳真)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.地址)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+           
+            [
+                @Html.ActionLink("跳轉到銀行資訊", "Index", "BankData", new { item.Id }, null)
+            ]
+        </td>
+        <td>
+
+            [
+            @Html.ActionLink("跳轉到客戶聯絡人資訊", "Index", "Contact", new { item.Id }, null)
+            ]
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

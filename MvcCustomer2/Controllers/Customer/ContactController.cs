@@ -13,11 +13,21 @@ namespace MvcCustomer2.Controllers
 {
     public class ContactController : BaseController
     {
-
+        //TODO:修改Index，可以從id取得Contact指定的資訊
         // GET: Contact
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? id)
         {
-            var 客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料);
+            IQueryable<客戶聯絡人> 客戶聯絡人;
+            if (id==null)
+            {
+                客戶聯絡人 = db.客戶聯絡人.Include(客 => 客.客戶資料);
+            }else
+            {
+                客戶聯絡人 = db.客戶聯絡人.Where(e => e.客戶Id == id);
+                ViewBag.id = id;
+
+            }
+
             return View(await 客戶聯絡人.ToListAsync());
         }
 
@@ -37,9 +47,17 @@ namespace MvcCustomer2.Controllers
         }
 
         // GET: Contact/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.客戶Id = new SelectList(db.客戶資料, "Id", "客戶名稱");
+            if (id==null)
+            {
+                ViewBag.客戶Id = new SelectList(db.客戶資料, "Id", "客戶名稱");
+
+            }
+            else
+            {
+                ViewBag.客戶Id = new SelectList(db.客戶資料.Where(e=>e.Id==id) , "Id", "客戶名稱");
+            }
             return View();
         }
 

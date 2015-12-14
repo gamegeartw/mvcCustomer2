@@ -12,15 +12,17 @@ namespace mvcCustomer.Models
         public class BankData
         {
             public int Id { get; set; }
-             [Display(Name = "客戶名稱")]
+            [Display(Name = "客戶名稱")]
             public int 客戶Id { get; set; }
             [Required]
             public string 銀行名稱 { get; set; }
             [Required]
             public int 銀行代碼 { get; set; }
             public Nullable<int> 分行代碼 { get; set; }
+            [Required]
             public string 帳戶名稱 { get; set; }
-            [RegularExpression(@"\d{10,16}",ErrorMessage="長度不符合")]
+            [Required]
+            [RegularExpression(@"\d{10,16}", ErrorMessage = "長度不符合")]
             public string 帳戶號碼 { get; set; }
         }
     }
