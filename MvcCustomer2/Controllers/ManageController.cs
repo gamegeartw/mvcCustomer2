@@ -5,50 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using MvcCustomer2.Models;
 
 namespace MvcCustomer2.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : AccountBaseController
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
 
         public ManageController()
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
 
         //
         // GET: /Manage/Index
@@ -320,18 +291,9 @@ namespace MvcCustomer2.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && _userManager != null)
-            {
-                _userManager.Dispose();
-                _userManager = null;
-            }
 
-            base.Dispose(disposing);
-        }
 
-#region Helper
+        #region Helper
         // 新增外部登入時用來當做 XSRF 保護
         private const string XsrfKey = "XsrfId";
 
@@ -382,6 +344,6 @@ namespace MvcCustomer2.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

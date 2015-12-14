@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -170,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountBaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Customer\BankDataController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -307,6 +309,7 @@
     <Content Include="Views\BankData\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\AccountBase\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
