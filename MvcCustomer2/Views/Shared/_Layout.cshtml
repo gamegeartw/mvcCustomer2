@@ -25,6 +25,17 @@
                     <li>@Html.ActionLink("首頁", "Index", "Home")</li>
                     <li>@Html.ActionLink("關於", "About", "Home")</li>
                     <li>@Html.ActionLink("連絡方式", "Contact", "Home")</li>
+                    <!--新增的下拉式選單-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">客戶管理功能 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("客戶資料管理", "Index", "Customer")</li>
+                            <li>@Html.ActionLink("客戶銀行資訊", "Index", "BankData")</li>
+                            <li>@Html.ActionLink("客戶聯絡人", "Index", "Contact")</li>
+
+                        </ul>
+                    </li>
+                    <!--end of 新增的下拉式選單-->
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
