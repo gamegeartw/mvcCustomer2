@@ -20,8 +20,14 @@ namespace MvcCustomer2.Controllers
 
         public AccountBaseController()
         {
-
-
+            //TODO:新增預設角色
+            if (context.Roles.Count()==0)
+            {
+                context.Roles.Add(new IdentityRole("admin"));
+                context.Roles.Add(new IdentityRole("operator"));
+                context.Roles.Add(new IdentityRole("user"));
+            }
+            context.SaveChanges();
 
         }
         public AccountBaseController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
