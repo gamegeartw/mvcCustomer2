@@ -71,7 +71,7 @@ namespace MvcCustomer2.Controllers
         //TODO:不知為何，ModelState.IsValid都是False
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,Password,NickName,UserRoles")]Models.AccountModel account)
+        public ActionResult Create([Bind(Include = "Id,Email,UserName,Password,NickName,UserRoles")]Models.AccountModel account)
         {
             String message = string.Empty;
             try

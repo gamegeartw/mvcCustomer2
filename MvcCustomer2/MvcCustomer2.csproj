@@ -323,6 +323,7 @@
     <Content Include="Views\RoleManager\Edit.cshtml" />
     <Content Include="Views\RoleManager\ResetPassword.cshtml" />
     <Content Include="Views\RoleManager\Create.cshtml" />
+    <Content Include="Views\RoleManager\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512140120352_InitialCreate.resx">

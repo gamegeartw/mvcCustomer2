@@ -12,9 +12,9 @@ namespace MvcCustomer2.Models
         [Display(Name ="使用者GUID")]
         public string Id { get; set; }
         [Display(Name ="電子郵件")]
+        [DataType(DataType.EmailAddress)]
         [Required]
         public string Email { get; set; }
-        [Required]
         [Display(Name ="顯示名稱")]
         public string UserName { get; set; }
         [Display(Name = "所屬角色")]
