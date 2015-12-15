@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Net;
 
 namespace MvcCustomer2.Controllers
 {
@@ -90,8 +91,17 @@ namespace MvcCustomer2.Controllers
         // GET: RoleManager/Edit/5
         public ActionResult Edit(string id)
         {
-            var _user = GetUser(id);
-            return View(_user);
+            if (String.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                var _user = GetUser(id);
+                ViewBag.Roles = RoleManager.Roles.Select(r => r.Name).ToList();
+                return View(_user);
+            }
+
         }
 
         //TODO:自訂取得使用者方法
@@ -104,6 +114,7 @@ namespace MvcCustomer2.Controllers
         }
 
         // POST: RoleManager/Edit/5
+        //TODO:對帳號角色來做編輯
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserName,Email,UserRoles")]Models.AccountModel account)
@@ -116,9 +127,22 @@ namespace MvcCustomer2.Controllers
                     var user = UserManager.FindById(account.Id);
                     user.UserName = account.UserName;
                     user.Email = account.Email;
+                    //因為取得的UserRoles是一個從CheckBox取得的陣列,有選取到才會有值,不然都是false,
+                    //所以用linq或是Lambda取得非false的字串
+                    
+                    var result = from r in account.UserRoles
+                                 where r != "false"
+                                 select r;
+                    var result2 = account.UserRoles.Where((string x) => x != "false");//這裡要明確指定變數型別(因為自動推斷會推斷成boolean)
+
+
                     //TODO:先將帳號自角色群組中全數移除，再加入指定的角色內
                     UserManager.RemoveFromRoles(account.Id, UserManager.GetRoles(account.Id).ToArray());
-                    UserManager.AddToRoles(account.Id, account.UserRoles.ToArray());
+                    if (result != null)
+                    {
+                        UserManager.AddToRoles(account.Id, result2.ToArray());
+                    }
+
                     UserManager.Update(user);//一定要加，常常忘記 XDDD
                 }
                 return RedirectToAction("Index");
@@ -137,7 +161,7 @@ namespace MvcCustomer2.Controllers
         }
 
         // POST: RoleManager/Delete/5
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
@@ -154,6 +178,20 @@ namespace MvcCustomer2.Controllers
             {
                 return View();
             }
+        }
+        [HttpPost, ActionName("ResetPassword")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPasswordConfirmed(string Id)
+        {
+            //TODO:重置密碼
+            UserManager.RemovePassword(Id);
+            UserManager.AddPassword(Id, "P@ssw0rd");
+            return RedirectToAction("Index");
+        }
+        public ActionResult ResetPassword(string id)
+        {
+            ViewBag.Id = id;
+            return View();
         }
     }
 }

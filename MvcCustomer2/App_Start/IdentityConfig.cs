@@ -105,6 +105,12 @@ namespace MvcCustomer2
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
+
+        //TODO:新增以電子郵件登入驗證的方法，原本的帳號登入驗證方式是以UserName來驗證
+        public  Task<SignInStatus> PasswordSignInByEmailAsync(string email, string password, bool isPersistent, bool shouldLockout)
+        {
+            return base.PasswordSignInAsync(UserManager.FindByEmail(email).UserName, password, isPersistent, shouldLockout);
+        }
     }
     //TODO:RoleManager
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly

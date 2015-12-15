@@ -312,6 +312,7 @@
     <Content Include="Views\RoleManager\Index.cshtml" />
     <Content Include="Views\RoleManager\Details.cshtml" />
     <Content Include="Views\RoleManager\Edit.cshtml" />
+    <Content Include="Views\RoleManager\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
