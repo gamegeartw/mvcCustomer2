@@ -129,7 +129,8 @@ namespace MvcCustomer2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //TODO:配合新增NickName，在Register面頁中新增NickName欄位，並寫入Identity
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,NickName=model.NickName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

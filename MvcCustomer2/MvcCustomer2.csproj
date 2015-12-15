@@ -183,6 +183,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512140120352_InitialCreate.cs" />
+    <Compile Include="Migrations\201512140120352_InitialCreate.Designer.cs">
+      <DependentUpon>201512140120352_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512150601330_Init.cs" />
+    <Compile Include="Migrations\201512150601330_Init.Designer.cs">
+      <DependentUpon>201512150601330_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -313,8 +322,16 @@
     <Content Include="Views\RoleManager\Details.cshtml" />
     <Content Include="Views\RoleManager\Edit.cshtml" />
     <Content Include="Views\RoleManager\ResetPassword.cshtml" />
+    <Content Include="Views\RoleManager\Create.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512140120352_InitialCreate.resx">
+      <DependentUpon>201512140120352_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512150601330_Init.resx">
+      <DependentUpon>201512150601330_Init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

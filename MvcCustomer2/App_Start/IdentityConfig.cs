@@ -109,7 +109,7 @@ namespace MvcCustomer2
         //TODO:新增以電子郵件登入驗證的方法，原本的帳號登入驗證方式是以UserName來驗證
         public  Task<SignInStatus> PasswordSignInByEmailAsync(string email, string password, bool isPersistent, bool shouldLockout)
         {
-            return base.PasswordSignInAsync(UserManager.FindByEmail(email).UserName, password, isPersistent, shouldLockout);
+            return base.PasswordSignInAsync(this.UserManager.FindByEmail(email).UserName , password, isPersistent, shouldLockout);
         }
     }
     //TODO:RoleManager

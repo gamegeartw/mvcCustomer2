@@ -21,5 +21,7 @@ namespace MvcCustomer2.Models
         public IList<string> UserRoles { get; set; }
         [Display(Name="密碼")]
         public string Password { get; set; }
+        [Display(Name="暱稱")]
+        public string NickName { get; set; }
     }
 }

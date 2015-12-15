@@ -42,13 +42,14 @@ namespace MvcCustomer2.Controllers
 
 
         // GET: RoleManager
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
             List<MvcCustomer2.Models.AccountModel> users = new List<Models.AccountModel>();
             foreach (var user in UserManager.Users.ToList())
             {
                 users.Add(GetUser(user.Id));
             }
+            ViewBag.StatusMessage = message;
             return View(users);
             //return View();
         }
@@ -67,25 +68,29 @@ namespace MvcCustomer2.Controllers
         }
 
         // POST: RoleManager/Create
+        //TODO:不知為何，ModelState.IsValid都是False
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public ActionResult Create([Bind(Include = "Id,UserName,Email,Password,UserRoles")]Models.AccountModel account)
+        public ActionResult Create([Bind(Include = "Id,Email,Password,NickName,UserRoles")]Models.AccountModel account)
         {
+            String message = string.Empty;
             try
             {
-                if (true)
+                if (ModelState.IsValid)
                 {
-
+                    // TODO: 由管理員建立帳號
+                    var user = new Models.ApplicationUser() { UserName = account.Email, Email = account.Email, NickName = account.NickName };
+                    UserManager.Create(user,"P@ssw0rd");
+                    UserManager.AddToRole(UserManager.FindByEmail(account.Email).Id, "user");
+                    message=@"已建立帳號，密碼為P@ssw0rd";
                 }
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                message=ex.Message;
             }
+            return RedirectToAction("Index", new { message = message });
         }
 
         // GET: RoleManager/Edit/5
@@ -107,9 +112,21 @@ namespace MvcCustomer2.Controllers
         //TODO:自訂取得使用者方法
         private Models.AccountModel GetUser(string id)
         {
-            var user = UserManager.FindById(id);
-            var _user = new Models.AccountModel() { Id = user.Id, UserName = user.UserName, Email = user.Email };
-            _user.UserRoles = UserManager.GetRoles(user.Id);
+            Models.AccountModel _user = new Models.AccountModel(); ;
+            try
+            {
+                var user = UserManager.FindById(id);
+                 _user = new Models.AccountModel() { Id = user.Id, UserName = user.UserName, Email = user.Email,NickName=user.NickName };
+                
+                _user.UserRoles = UserManager.GetRoles(user.Id);
+                
+            }
+            catch (Exception)
+            {
+                
+               // throw;
+                RedirectToAction("Index");
+            }
             return _user;
         }
 
@@ -117,7 +134,7 @@ namespace MvcCustomer2.Controllers
         //TODO:對帳號角色來做編輯
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserName,Email,UserRoles")]Models.AccountModel account)
+        public ActionResult Edit([Bind(Include = "Id,UserName,Email,NickName,UserRoles")]Models.AccountModel account)
         {
             try
             {
@@ -129,7 +146,7 @@ namespace MvcCustomer2.Controllers
                     user.Email = account.Email;
                     //因為取得的UserRoles是一個從CheckBox取得的陣列,有選取到才會有值,不然都是false,
                     //所以用linq或是Lambda取得非false的字串
-                    
+                    user.NickName = account.NickName;
                     var result = from r in account.UserRoles
                                  where r != "false"
                                  select r;
