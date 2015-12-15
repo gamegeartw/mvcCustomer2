@@ -81,4 +81,11 @@
                 }*@
         </dd>
     </dl>
+    @if (User.IsInRole("admin"))
+    {
+        <dl class="dl-horizontal">
+            <dt>管理員選項:</dt>
+            <dd>@Html.ActionLink("跳轉到管理畫面","Index","RoleManager",null,null)</dd>
+        </dl>
+    }
 </div>

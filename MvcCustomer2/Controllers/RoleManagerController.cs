@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace MvcCustomer2.Controllers
 {
-    [Authorize(Roles ="admin",Users ="gamegear.tw@gmail.com")]
+    [Authorize(Roles = "admin")]
     public class RoleManagerController : Controller
     {
         private ApplicationRoleManager _roleManager;
@@ -28,31 +28,35 @@ namespace MvcCustomer2.Controllers
             private set { _userManager = value; }
         }
 
-        public RoleManagerController() { }
+        public RoleManagerController()
+        {
+        }
 
+        //TODO:注入UserManager跟RoleManager
         public RoleManagerController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        
+
         // GET: RoleManager
         public ActionResult Index()
         {
             List<MvcCustomer2.Models.AccountModel> users = new List<Models.AccountModel>();
-            foreach(var user in UserManager.Users.ToList())
+            foreach (var user in UserManager.Users.ToList())
             {
-                users.Add(new Models.AccountModel() { Id = user.Id, UserName = user.UserName, email = user.Email });
+                users.Add(GetUser(user.Id));
             }
             return View(users);
             //return View();
         }
 
         // GET: RoleManager/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+
+            return View(GetUser(id));
         }
 
         // GET: RoleManager/Create
@@ -63,10 +67,16 @@ namespace MvcCustomer2.Controllers
 
         // POST: RoleManager/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Create([Bind(Include = "Id,UserName,Email,Password,UserRoles")]Models.AccountModel account)
         {
             try
             {
+                if (true)
+                {
+
+                }
                 // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
@@ -78,20 +88,41 @@ namespace MvcCustomer2.Controllers
         }
 
         // GET: RoleManager/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var _user = GetUser(id);
+            return View(_user);
+        }
+
+        //TODO:自訂取得使用者方法
+        private Models.AccountModel GetUser(string id)
+        {
+            var user = UserManager.FindById(id);
+            var _user = new Models.AccountModel() { Id = user.Id, UserName = user.UserName, Email = user.Email };
+            _user.UserRoles = UserManager.GetRoles(user.Id);
+            return _user;
         }
 
         // POST: RoleManager/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,UserName,Email,UserRoles")]Models.AccountModel account)
         {
             try
             {
-                // TODO: Add update logic here
-
+                if (ModelState.IsValid)
+                {
+                    // TODO: Add update logic here
+                    var user = UserManager.FindById(account.Id);
+                    user.UserName = account.UserName;
+                    user.Email = account.Email;
+                    //TODO:先將帳號自角色群組中全數移除，再加入指定的角色內
+                    UserManager.RemoveFromRoles(account.Id, UserManager.GetRoles(account.Id).ToArray());
+                    UserManager.AddToRoles(account.Id, account.UserRoles.ToArray());
+                    UserManager.Update(user);//一定要加，常常忘記 XDDD
+                }
                 return RedirectToAction("Index");
+
             }
             catch
             {
@@ -100,19 +131,23 @@ namespace MvcCustomer2.Controllers
         }
 
         // GET: RoleManager/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            return View(GetUser(id));
         }
 
         // POST: RoleManager/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                if (ModelState.IsValid)
+                {
+                    UserManager.Delete(UserManager.FindById(id));
+                }
                 return RedirectToAction("Index");
             }
             catch

@@ -310,6 +310,8 @@
     <Content Include="Views\BankData\Edit.cshtml" />
     <Content Include="Views\BankData\Index.cshtml" />
     <Content Include="Views\RoleManager\Index.cshtml" />
+    <Content Include="Views\RoleManager\Details.cshtml" />
+    <Content Include="Views\RoleManager\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

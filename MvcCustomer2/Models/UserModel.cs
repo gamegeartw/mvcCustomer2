@@ -9,13 +9,15 @@ namespace MvcCustomer2.Models
     
     public class AccountModel
     {
-        [Display(Name ="編號")]
+        [Display(Name ="使用者GUID")]
         public string Id { get; set; }
         [Display(Name ="電子郵件")]
-        public string  email { get; set; }
+        public string Email { get; set; }
         [Display(Name ="顯示名稱")]
         public string UserName { get; set; }
-        [Display(Name ="所屬角色")]
-        public IList<string> Roles { get; set; }
+        [Display(Name = "所屬角色")]
+        public IList<string> UserRoles { get; set; }
+        [Display(Name="密碼")]
+        public string Password { get; set; }
     }
 }
