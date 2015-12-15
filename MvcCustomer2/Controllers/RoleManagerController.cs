@@ -33,7 +33,7 @@ namespace MvcCustomer2.Controllers
         {
         }
 
-        //TODO:注入UserManager跟RoleManager
+        //TODO:注入UserManager跟RoleManager(finish)
         public RoleManagerController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
         {
             _userManager = userManager;
@@ -68,7 +68,7 @@ namespace MvcCustomer2.Controllers
         }
 
         // POST: RoleManager/Create
-        //TODO:不知為何，ModelState.IsValid都是False
+        //TODO:使用Bind時要特別注意，當Model被設定為Required時，欄位一定要有值，否則ModelState.IsValid會是False
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,UserName,Password,NickName,UserRoles")]Models.AccountModel account)
@@ -109,7 +109,7 @@ namespace MvcCustomer2.Controllers
 
         }
 
-        //TODO:自訂取得使用者方法
+        //TODO:自訂取得使用者方法(finish)
         private Models.AccountModel GetUser(string id)
         {
             Models.AccountModel _user = new Models.AccountModel(); ;
@@ -131,7 +131,7 @@ namespace MvcCustomer2.Controllers
         }
 
         // POST: RoleManager/Edit/5
-        //TODO:對帳號角色來做編輯
+        //TODO:對帳號角色來做編輯(finish)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,UserName,Email,NickName,UserRoles")]Models.AccountModel account)
@@ -140,7 +140,7 @@ namespace MvcCustomer2.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // TODO: Add update logic here
+                    // TODO: 更新帳號資料(管理員專用)
                     var user = UserManager.FindById(account.Id);
                     user.UserName = account.UserName;
                     user.Email = account.Email;
@@ -184,7 +184,7 @@ namespace MvcCustomer2.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                // TODO: 刪除帳號(管理員專用)
                 if (ModelState.IsValid)
                 {
                     UserManager.Delete(UserManager.FindById(id));
@@ -200,9 +200,10 @@ namespace MvcCustomer2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ResetPasswordConfirmed(string Id)
         {
-            //TODO:重置密碼
+            //TODO:重置密碼，預設密碼使用appSetting來指定(finish)
             UserManager.RemovePassword(Id);
-            UserManager.AddPassword(Id, "P@ssw0rd");
+            var password = System.Web.Configuration.WebConfigurationManager.AppSettings.GetValues("ResetPassword")[0];
+            UserManager.AddPassword(Id, password);
             return RedirectToAction("Index");
         }
         public ActionResult ResetPassword(string id)

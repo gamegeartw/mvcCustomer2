@@ -13,7 +13,7 @@ namespace MvcCustomer2.Controllers
 {
     public class ContactController : BaseController
     {
-        //TODO:修改Index，可以從id取得Contact指定的資訊
+        //TODO:4.修改Index，可以從id取得Contact指定的資訊
         // GET: Contact
         public async Task<ActionResult> Index(int? id)
         {

@@ -10,17 +10,18 @@ using MvcCustomer2.Models;
 
 namespace MvcCustomer2.Controllers
 {
-    //TODO:建立帳號管理共用Controller
+    //TODO:1.建立帳號管理共用Controller
     public class AccountBaseController : Controller
     {
         protected ApplicationSignInManager _signInManager;
         protected ApplicationUserManager _userManager;
-        //TODO:建立Identity EntityFramework實體
+        //TODO:建立Identity EntityFramework實體，藉此建立角色成員(finish)
         protected ApplicationDbContext context = new ApplicationDbContext();
 
         public AccountBaseController()
         {
-            //TODO:新增預設角色
+
+            //TODO:新增預設角色(finish)
             if (context.Roles.Count() == 0)
             {
                 context.Roles.Add(new IdentityRole("admin"));

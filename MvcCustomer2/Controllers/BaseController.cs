@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MvcCustomer2.Controllers
 {
-    //TODO:共用的BaseController
+    //TODO:2.共用的BaseController
     public class BaseController : Controller
     {
         protected 客戶資料Entities db = new 客戶資料Entities();

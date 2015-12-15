@@ -12,7 +12,7 @@ namespace MvcCustomer2.Controllers
 {
     public class BankDataController : BaseController
     {
-        //TODO:修改Index，可以從id取得指定Bank的資訊
+        //TODO:3.修改Index，可以從id取得指定Bank的資訊
         // GET: BankData
         //public ActionResult Index()
         //{
@@ -54,7 +54,7 @@ namespace MvcCustomer2.Controllers
         }
 
         // GET: BankData/Create
-        //TODO:新增指定客戶名稱模式
+        //TODO:新增指定客戶名稱模式(finish)
         public ActionResult Create(int? id)
         {
             if (id==null)

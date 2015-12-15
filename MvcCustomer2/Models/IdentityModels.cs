@@ -9,7 +9,8 @@ namespace MvcCustomer2.Models
     // 您可以在 ApplicationUser 類別新增更多屬性，為使用者新增設定檔資料，請造訪 http://go.microsoft.com/fwlink/?LinkID=317594 以深入了解。
     public class ApplicationUser : IdentityUser
     {
-        //TODO:新增欄位NickName
+        //TODO:新增欄位NickName(finish)
+        //做法參考ASP.NET MVC 5 網站開發美學 12-42至12-44
         public string NickName { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

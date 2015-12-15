@@ -51,7 +51,7 @@ namespace MvcCustomer2.Controllers
 
             // 這不會計算為帳戶鎖定的登入失敗
             // 若要啟用密碼失敗來觸發帳戶鎖定，請變更為 shouldLockout: true
-            //TODO:在IdentityConfig中新增以電子郵件登入的方法，並改使用之
+            //TODO:5.在IdentityConfig中新增以電子郵件登入的方法，並改使用之(finish)
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             var result = await SignInManager.PasswordSignInByEmailAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
@@ -129,7 +129,7 @@ namespace MvcCustomer2.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO:配合新增NickName，在Register面頁中新增NickName欄位，並寫入Identity
+                //TODO:配合新增NickName，在Register面頁中新增NickName欄位，並寫入Identity(finish)
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email,NickName=model.NickName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

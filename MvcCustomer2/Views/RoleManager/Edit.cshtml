@@ -51,8 +51,8 @@
                 {
                     <div class="checkbox">
                         <label>
-                            @Html.CheckBox("UserRoles", Model.UserRoles.Contains(role), new {@value=role })
-                            @Html.Label(role)
+                            @Html.MyCheckBox("UserRoles", Model.UserRoles.Contains(role),role,role)
+                         
                         </label>
                     </div>
                 }
